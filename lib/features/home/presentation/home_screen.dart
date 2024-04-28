@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciador_vagas/db_helper.dart';
+import 'package:get_it/get_it.dart';
+
+GetIt getIt = GetIt.instance;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -9,6 +13,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _counter = 0;
+  final DatabaseHelper db = getIt<DatabaseHelper>();
 
   void _incrementCounter() {
     setState(() {
@@ -19,6 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    db.database;
   }
 
   TextTheme get textTheme => Theme.of(context).textTheme;
