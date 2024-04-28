@@ -26,22 +26,22 @@ class DatabaseHelper {
   Future<void> _onCreateDB(Database db, int version) async {
     await db.transaction((txn) async {
       await txn.execute('''
-      CREATE TABLE vagas(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        status INTEGER NOT NULL DEFAULT 0,
-        placa_veiculo TEXT
-      );
+        CREATE TABLE vagas(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            status INTEGER NOT NULL DEFAULT 0, -- 0 como padrão para livre
+            placa_veiculo TEXT -- Placa do veículo atualmente na vaga, NULL se livre
+        );
     ''');
 
       await txn.execute('''
-      CREATE TABLE movimentacoes(
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        placa_veiculo TEXT NOT NULL,
-        tipo INTEGER NOT NULL,
-        timestamp TEXT NOT NULL,
-        vaga_id INTEGER,
-        FOREIGN KEY(vaga_id) REFERENCES vagas(id)
-      );
+        CREATE TABLE movimentacoes(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            placa_veiculo TEXT NOT NULL, -- Placa do veículo
+            tipo INTEGER NOT NULL, -- 0 para saída, 1 para entrada
+            timestamp TEXT NOT NULL, -- Data e hora da movimentação, formatada como ISO 8601 string
+            vaga_id INTEGER, -- ID da vaga relacionada
+            FOREIGN KEY(vaga_id) REFERENCES vagas(id) -- Chave estrangeira ligando à vaga usada
+        );
     ''');
       for (int i = 0; i < 9; i++) {
         await txn.insert('vagas', {'placa_veiculo': null, 'status': 0});

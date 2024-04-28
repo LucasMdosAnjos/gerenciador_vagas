@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:gerenciador_vagas/db_helper.dart';
+import 'package:gerenciador_vagas/helpers/db_helper.dart';
 import 'package:gerenciador_vagas/features/home/presentation/home_screen.dart';
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sqflite/sqflite.dart';
 
 GetIt getIt = GetIt.instance;
 
 void main() {
-  getIt.registerSingleton<DatabaseHelper>(DatabaseHelper());
+  getIt.registerSingletonAsync<Database>(() => DatabaseHelper().database);
 
   runApp(const MyApp());
 }
