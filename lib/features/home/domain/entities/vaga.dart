@@ -7,6 +7,7 @@ class Vaga {
   Vaga({
     required this.id,
     required this.statusVaga,
+    this.placaVeiculo
   });
 }
 

@@ -13,6 +13,8 @@ class GetVagasBloc extends Bloc<GetVagasEvent, GetVagasState> {
       result.fold((error) {
         emit(GetVagasErrorState(message: error.message));
       }, (vagas) {
+        print('sucesso');
+        print(vagas);
         emit(GetVagasSuccessState(vagas: vagas));
       });
     });

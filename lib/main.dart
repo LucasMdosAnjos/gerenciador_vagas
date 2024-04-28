@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:gerenciador_vagas/features/home/data/sqflite/sf_get_vagas.dart';
+import 'package:gerenciador_vagas/features/home/domain/repositories/get_vagas_repository.dart';
+import 'package:gerenciador_vagas/features/home/domain/usecases/get_vagas_usecase.dart';
+import 'package:gerenciador_vagas/features/home/infra/datasources/get_vagas_datasource.dart';
+import 'package:gerenciador_vagas/features/home/infra/repositories/get_vagas_repository_impl.dart';
+import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_bloc.dart';
 import 'package:gerenciador_vagas/helpers/db_helper.dart';
 import 'package:gerenciador_vagas/features/home/presentation/home_screen.dart';
 import 'package:get_it/get_it.dart';
@@ -7,8 +13,16 @@ import 'package:sqflite/sqflite.dart';
 
 GetIt getIt = GetIt.instance;
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   getIt.registerSingletonAsync<Database>(() => DatabaseHelper().database);
+
+  await getIt.allReady();
+
+  getIt.registerSingleton<GetVagasDatasource>(SfGetVagas(getIt()));
+  getIt.registerSingleton<GetVagasRepository>(GetVagasRepositoryImpl(getIt()));
+  getIt.registerSingleton<IGetVagasUsecase>(GetVagasUsecase(getIt()));
+  getIt.registerSingleton<GetVagasBloc>(GetVagasBloc(getIt()));
 
   runApp(const MyApp());
 }
