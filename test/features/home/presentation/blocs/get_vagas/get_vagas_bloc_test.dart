@@ -5,6 +5,7 @@ import 'package:gerenciador_vagas/features/home/domain/errors/errors.dart';
 import 'package:gerenciador_vagas/features/home/domain/repositories/get_vagas_repository.dart';
 import 'package:gerenciador_vagas/features/home/domain/usecases/get_vagas_usecase.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_bloc.dart';
+import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_event.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_state.dart';
 import 'package:mocktail/mocktail.dart';
 
@@ -38,7 +39,7 @@ void main() {
             isA<GetVagasSuccessState>(),
           ]));
 
-      await bloc.getVagas();
+      bloc.add(BuscarVagas());
     });
 
     test('Deve retornar um erro vindo do repository', () async {
@@ -54,7 +55,7 @@ void main() {
             isA<GetVagasErrorState>(),
           ]));
 
-      await bloc.getVagas();
+      bloc.add(BuscarVagas());
     });
   });
 }
