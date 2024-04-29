@@ -46,5 +46,24 @@ void main() {
           find.byKey(const Key("getVagasSuccessWidget"));
       expect(getVagasSuccessWidgetFinder, findsOneWidget);
     });
+
+    testWidgets('Deve aparecer um aviso no estado de erro', (tester) async {
+      String message = "Erro ao buscar as vagas";
+
+      whenListen(
+          bloc,
+          Stream.fromIterable(
+              [GetVagasLoadingState(), GetVagasErrorState(message: message)]),
+          initialState: GetVagasInitialState());
+
+      await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+      await tester.pump();
+      await tester.pumpAndSettle();
+
+      final getVagasSuccessWidgetFinder =
+          find.byKey(const Key("getVagasErrorWidget"));
+      expect(getVagasSuccessWidgetFinder, findsOneWidget);
+      expect(find.text(message), findsOneWidget);
+    });
   });
 }

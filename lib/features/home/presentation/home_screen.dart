@@ -70,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
                 if (state is GetVagasErrorState) {
                   return Center(
+                    key: const Key("getVagasErrorWidget"),
                     child: Text(
                       state.message,
                       style: textTheme.titleMedium
