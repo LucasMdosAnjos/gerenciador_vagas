@@ -45,9 +45,14 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: 'Gerenciador de Vagas',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.indigo, brightness: Brightness.light),
       ),
+      darkTheme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.indigo, brightness: Brightness.dark),
+      ),
+      themeMode: ThemeMode.system,
       routerConfig: _router,
     );
   }
