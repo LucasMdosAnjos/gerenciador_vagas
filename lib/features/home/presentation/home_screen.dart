@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         MoveEffect(
                             duration: Duration(milliseconds: 300),
                             curve: Curves.easeIn,
-                            begin: Offset(-100, 0),
+                            begin: Offset(250, 0),
                             end: Offset(0, 0))
                       ],
                       children: vagas
