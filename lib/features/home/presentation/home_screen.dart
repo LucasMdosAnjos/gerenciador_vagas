@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_bloc.dart';
@@ -23,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+
     bloc.add(BuscarVagas());
   }
 
@@ -60,7 +60,6 @@ class _HomeScreenState extends State<HomeScreen> {
             child: BlocBuilder<GetVagasBloc, GetVagasState>(
               bloc: bloc,
               builder: (context, state) {
-                print(state);
                 if (state is GetVagasLoadingState) {
                   return Container(
                     key: const Key("getVagasLoadingWidget"),

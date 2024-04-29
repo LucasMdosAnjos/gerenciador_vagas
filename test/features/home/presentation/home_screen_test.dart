@@ -1,55 +1,50 @@
-import 'package:dartz/dartz.dart';
+import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:gerenciador_vagas/features/home/domain/entities/vaga.dart';
-import 'package:gerenciador_vagas/features/home/domain/repositories/get_vagas_repository.dart';
-import 'package:gerenciador_vagas/features/home/domain/usecases/get_vagas_usecase.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_bloc.dart';
+import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_event.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_state.dart';
 import 'package:gerenciador_vagas/features/home/presentation/home_screen.dart';
 import 'package:get_it/get_it.dart';
-import 'package:mocktail/mocktail.dart';
 
 final GetIt getIt = GetIt.instance;
 
-class GetVagasRepositoryMock extends Mock implements GetVagasRepository {}
+class MockGetVagasBloc extends MockBloc<GetVagasEvent, GetVagasState>
+    implements GetVagasBloc {}
 
 void main() {
-  late GetVagasRepositoryMock repository;
+  late MockGetVagasBloc bloc;
 
-  setUp(() async {
-    await getIt.reset();
-    repository = GetVagasRepositoryMock();
-    getIt.registerSingleton<GetVagasRepository>(repository);
-    getIt.registerSingleton<IGetVagasUsecase>(GetVagasUsecase(getIt()));
-    getIt.registerSingleton<GetVagasBloc>(GetVagasBloc(getIt()));
+  setUpAll(() async {
+    bloc = MockGetVagasBloc();
+
+    getIt.registerSingleton<GetVagasBloc>(bloc);
   });
+
   group('Home Screen | ', () {
-    testWidgets('Deve aparecer uma listagem de vagas', (tester) async {
+    testWidgets('Deve aparecer uma listagem de vagas no estado de sucesso',
+        (tester) async {
       final listVagas = [
         Vaga(id: 1, statusVaga: StatusVaga.livre),
         Vaga(id: 2, statusVaga: StatusVaga.livre),
         Vaga(id: 3, statusVaga: StatusVaga.preeenchida)
       ];
 
-      when(
-        () => repository.getVagas(),
-      ).thenAnswer((invocation) async => Right(listVagas));
+      whenListen(
+          bloc,
+          Stream.fromIterable(
+              [GetVagasLoadingState(), GetVagasSuccessState(vagas: listVagas)]),
+          initialState: GetVagasInitialState());
 
-      await tester.pumpWidget(const MaterialApp(
-        home: HomeScreen(),
-      ));
+      await tester.pumpWidget(const MaterialApp(home: HomeScreen()));
+      await tester.pump();
+      await tester
+          .pumpAndSettle(); // Isso aguardará todas as animações e construções de estado
 
-      await tester.pumpAndSettle();
-
-      await tester.pump(const Duration(seconds: 2));
-
-      // final getVagasSuccessWidgetFinder = find.byKey(
-      //   const Key("getVagasSuccessWidget"),
-      // );
-
-      // // Verifica se os widgets estão na tela
-      // expect(getVagasSuccessWidgetFinder, findsWidgets);
+      final getVagasSuccessWidgetFinder =
+          find.byKey(const Key("getVagasSuccessWidget"));
+      expect(getVagasSuccessWidgetFinder, findsOneWidget);
     });
   });
 }

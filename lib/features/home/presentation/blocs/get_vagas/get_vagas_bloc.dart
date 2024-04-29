@@ -9,12 +9,9 @@ class GetVagasBloc extends Bloc<GetVagasEvent, GetVagasState> {
     on<BuscarVagas>((event, emit) async {
       emit(GetVagasLoadingState());
       final result = await usecase();
-
       result.fold((error) {
         emit(GetVagasErrorState(message: error.message));
-      }, (vagas) {
-        print('sucesso');
-        print(vagas);
+      }, (vagas) async {
         emit(GetVagasSuccessState(vagas: vagas));
       });
     });
