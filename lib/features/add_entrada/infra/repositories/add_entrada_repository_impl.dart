@@ -18,5 +18,3 @@ class AddEntradaRepositoryImpl implements AddEntradaRepository{
     }
     }
   }
-
-}
