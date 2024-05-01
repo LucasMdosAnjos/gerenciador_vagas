@@ -43,6 +43,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       title: 'Gerenciador de Vagas',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(

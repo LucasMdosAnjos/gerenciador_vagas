@@ -28,7 +28,7 @@ class DatabaseHelper {
       await txn.execute('''
         CREATE TABLE vagas(
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            status INTEGER NOT NULL DEFAULT 0, -- 0 como padrão para livre
+            status INTEGER NOT NULL DEFAULT 0, -- 0 como padrão para livre e 1 como padrão para ocupada
             placa_veiculo TEXT -- Placa do veículo atualmente na vaga, NULL se livre
         );
     ''');
