@@ -13,6 +13,8 @@ O "Gerenciador de Vagas" é um aplicativo Flutter desenvolvido para gerenciar va
 - **Histórico de movimentações:** Tela dedicada para visualização do histórico de entradas e saídas, organizado por data em ordem decrescente.
 - **Suporte a temas:** Disponibilidade de temas claro e escuro.
 - **Compatibilidade:** Suporte para as plataformas iOS e Android.
+- **Temas Dark e Light:** Suporte a alteração de temas entre Dark e Light na Tela Inicial com o padrão sendo o Light.
+- **Vídeo de funcionamento do App:** https://youtu.be/O2xQfk3KUg0
 
 ## Versão do Flutter
 
