@@ -60,9 +60,9 @@ void main() {
       await tester.pump();
       await tester.pumpAndSettle();
 
-      final getVagasSuccessWidgetFinder =
+      final getVagasErrorWidgetFinder =
           find.byKey(const Key("getVagasErrorWidget"));
-      expect(getVagasSuccessWidgetFinder, findsOneWidget);
+      expect(getVagasErrorWidgetFinder, findsOneWidget);
       expect(find.text(message), findsOneWidget);
     });
   });

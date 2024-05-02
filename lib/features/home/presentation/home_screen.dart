@@ -7,6 +7,7 @@ import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_state.dart';
 import 'package:gerenciador_vagas/features/home/presentation/widgets/item_vaga_widget.dart';
 import 'package:gerenciador_vagas/main.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -84,7 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   TextButton.icon(
-                      onPressed: () {},
+                      onPressed: () {
+                        context.go('/historico');
+                      },
                       icon: const Icon(Icons.list),
                       label: const Text('Histórico'))
                 ],
