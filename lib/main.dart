@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gerenciador_vagas/cubits/theme_cubit.dart';
 import 'package:gerenciador_vagas/features/add_entrada/data/sqflite/sf_add_entrada.dart';
 import 'package:gerenciador_vagas/features/add_entrada/domain/repositories/add_entrada_repository.dart';
 import 'package:gerenciador_vagas/features/add_entrada/domain/usecases/add_entrada_usecase.dart';
@@ -27,6 +29,8 @@ void main() async {
 
   await getIt.allReady();
 
+  getIt.registerSingleton<ThemeCubit>(ThemeCubit());
+
   getIt.registerSingleton<GetVagasDatasource>(SfGetVagas(getIt()));
   getIt.registerSingleton<GetVagasRepository>(GetVagasRepositoryImpl(getIt()));
   getIt.registerSingleton<IGetVagasUsecase>(GetVagasUsecase(getIt()));
@@ -38,7 +42,7 @@ void main() async {
   getIt.registerSingleton<IAddEntradaUsecase>(AddEntradaUsecase(getIt()));
   getIt.registerSingleton<AddEntradaBloc>(AddEntradaBloc(getIt()));
 
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 // GoRouter configuration
@@ -58,23 +62,29 @@ final _router = GoRouter(
 );
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
+
+  final ThemeCubit themeCubit = getIt();
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-      title: 'Gerenciador de Vagas',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.indigo, brightness: Brightness.light),
-      ),
-      darkTheme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(
-            seedColor: Colors.indigo, brightness: Brightness.dark),
-      ),
-      themeMode: ThemeMode.system,
-      routerConfig: _router,
-    );
+    return BlocBuilder<ThemeCubit, ThemeMode>(
+        bloc: themeCubit,
+        builder: (context, state) {
+          return MaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'Gerenciador de Vagas',
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                  seedColor: Colors.indigo, brightness: Brightness.light),
+            ),
+            darkTheme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(
+                  seedColor: Colors.indigo, brightness: Brightness.dark),
+            ),
+            themeMode: state,
+            routerConfig: _router,
+          );
+        });
   }
 }

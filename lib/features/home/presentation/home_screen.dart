@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:gerenciador_vagas/cubits/theme_cubit.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_bloc.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_event.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_state.dart';
 import 'package:gerenciador_vagas/features/home/presentation/widgets/item_vaga_widget.dart';
-import 'package:get_it/get_it.dart';
-
-final GetIt getIt = GetIt.instance;
+import 'package:gerenciador_vagas/main.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,6 +17,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GetVagasBloc bloc = getIt();
+  final ThemeCubit themeCubit = getIt();
 
   @override
   void initState() {
@@ -38,6 +38,25 @@ class _HomeScreenState extends State<HomeScreen> {
           'Gerenciador de Vagas',
           style: textTheme.headlineSmall,
         ),
+        actions: [
+          BlocBuilder<ThemeCubit, ThemeMode>(
+              bloc: themeCubit,
+              builder: (context, state) {
+                if (state == ThemeMode.dark) {
+                  return IconButton(
+                      onPressed: () {
+                        themeCubit.setTheme(ThemeMode.light);
+                      },
+                      icon: const Icon(Icons.light_mode));
+                } else {
+                  return IconButton(
+                      onPressed: () {
+                        themeCubit.setTheme(ThemeMode.dark);
+                      },
+                      icon: const Icon(Icons.dark_mode));
+                }
+              })
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -45,18 +64,28 @@ class _HomeScreenState extends State<HomeScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             const SizedBox(
-              height: 16,
+              height: 8,
             ),
             SizedBox(
               width: double.infinity,
-              child: Text(
-                'Listagem de Vagas',
-                style: textTheme.titleLarge,
-                textAlign: TextAlign.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Listagem de Vagas',
+                    style: textTheme.titleLarge
+                        ?.copyWith(color: colorScheme.onBackground),
+                    textAlign: TextAlign.center,
+                  ),
+                  TextButton.icon(
+                      onPressed: () {},
+                      icon: const Icon(Icons.list),
+                      label: const Text('Movimentações'))
+                ],
               ),
             ),
             const SizedBox(
-              height: 16,
+              height: 8,
             ),
             Expanded(
               child: BlocBuilder<GetVagasBloc, GetVagasState>(
