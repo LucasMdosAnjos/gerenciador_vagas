@@ -8,8 +8,10 @@ import 'package:gerenciador_vagas/features/add_entrada/presentation/widgets/add_
 import 'package:gerenciador_vagas/features/home/domain/entities/vaga.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_bloc.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_event.dart';
-import 'package:gerenciador_vagas/main.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+
+final GetIt getIt = GetIt.instance;
 
 class AddEntradaScreen extends StatefulWidget {
   final Vaga vaga;

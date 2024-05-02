@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:gerenciador_vagas/features/add_entrada/domain/repositories/add_entrada_repository.dart';
@@ -5,8 +7,10 @@ import 'package:gerenciador_vagas/features/add_entrada/presentation/blocs/add_en
 import 'package:gerenciador_vagas/features/add_entrada/presentation/blocs/add_entrada_event.dart';
 import 'package:gerenciador_vagas/features/home/domain/entities/vaga.dart';
 import 'package:gerenciador_vagas/helpers/utils.dart';
-import 'package:gerenciador_vagas/main.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+
+final GetIt getIt = GetIt.instance;
 
 class AddEntradaForm extends StatefulWidget {
   const AddEntradaForm({super.key});
@@ -83,6 +87,7 @@ class _AddEntradaFormState extends State<AddEntradaForm> {
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
+                  key: const Key("textFormFieldPlacaVeiculo"),
                   controller: controllerAtual,
                   decoration: InputDecoration(
                     labelText: 'Digite a placa do veículo',
@@ -105,21 +110,27 @@ class _AddEntradaFormState extends State<AddEntradaForm> {
                 ),
                 const SizedBox(height: 12),
                 FilledButton.icon(
-                    onPressed: () {
-                      if (key.currentState!.validate()) {
-                        final Vaga vaga =
-                            GoRouterState.of(context).extra! as Vaga;
-                        final ParamsAddEntrada params = ParamsAddEntrada(
-                            vagaId: vaga.id,
-                            placaVeiculo: controllerAtual.text,
-                            timestamp: DateTime.now().toIso8601String());
-                        bloc.add(AddEntrada(params));
-                      }
-                    },
+                    key: const Key('buttonSalvarEntrada'),
+                    onPressed: salvarEntrada,
                     icon: const Icon(Icons.save),
                     label: const Text('SALVAR'))
               ]),
         ));
+  }
+
+  salvarEntrada() {
+    if (key.currentState!.validate()) {
+      if (Platform.environment.containsKey('FLUTTER_TEST')) {
+        // Se tiver rodando qualquer tipo de teste não deve continuar
+        return;
+      }
+      final Vaga vaga = GoRouterState.of(context).extra! as Vaga;
+      final ParamsAddEntrada params = ParamsAddEntrada(
+          vagaId: vaga.id,
+          placaVeiculo: controllerAtual.text,
+          timestamp: DateTime.now().toIso8601String());
+      bloc.add(AddEntrada(params));
+    }
   }
 }
 

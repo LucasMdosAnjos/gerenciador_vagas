@@ -9,9 +9,10 @@ import 'package:gerenciador_vagas/features/home/presentation/blocs/add_saida/add
 import 'package:gerenciador_vagas/features/home/presentation/blocs/add_saida/add_saida_state.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_bloc.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_event.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 
-import '../home_screen.dart';
+final GetIt getIt = GetIt.instance;
 
 class ItemVagaWidget extends StatefulWidget {
   final Vaga vaga;
