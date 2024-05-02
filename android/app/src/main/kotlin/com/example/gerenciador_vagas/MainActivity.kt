@@ -1,4 +1,4 @@
-package com.example.gerenciador_vagas
+package com.lucas.gerenciador_vagas
 
 import io.flutter.embedding.android.FlutterActivity
 
