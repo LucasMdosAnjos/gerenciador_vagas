@@ -23,9 +23,10 @@ class SfAddEntrada implements AddEntradaDatasource {
 
       print(result);
 
+      // Inserir na entidade movimentacoes o historico dessa entrada
       final result2 = await db.insert('movimentacoes', {
         'placa_veiculo': params.placaVeiculo,
-        'tipo': 0,
+        'tipo': 1, //1 para entrada
         'timestamp': DateTime.now().toIso8601String(),
         'vaga_id': params.vagaId
       });
