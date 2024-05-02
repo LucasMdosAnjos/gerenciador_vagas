@@ -25,6 +25,8 @@ void main() {
   group('Add Entrada Screen | ', () {
     testWidgets('Deve Validar o formulário com sucesso', (tester) async {
       String message = 'a placa não corresponde ao padrão';
+
+      String message2 = 'A placa não pode ser vazia';
       final vaga = Vaga(id: 1, statusVaga: StatusVaga.livre);
 
       whenListen(
@@ -52,16 +54,15 @@ void main() {
       // Colocar Placa Mercosul errada
       await tester.enterText(textFormFieldPlacaVeiculoFinder, 'ABC1D23');
 
-      // Tap the Button
+      // Clicar no botão
       await tester.tap(buttonSalvarEntradaFinder);
 
-      // Rebuild the widget after the state has changed
+      // Pump
       await tester.pump();
 
-      // Encontrar o form Key
-
-      // Expect the text to be changed after tapping the button
+      // Espero encontrar nenhum texto de erro no textfield
       expect(find.textContaining(message), findsNothing);
+      expect(find.textContaining(message2), findsNothing);
     });
     testWidgets('Deve Mostrar Widget de Erro com a placa errada',
         (tester) async {
