@@ -66,23 +66,43 @@ class _AddEntradaScreenState extends State<AddEntradaScreen> {
               },
               icon: const Icon(Icons.arrow_back)),
         ),
-        body: BlocConsumer<AddEntradaBloc, AddEntradaState>(
-          bloc: bloc,
-          builder: (context, state) {
-            if (state is AddEntradaInitialState) {
-              return const AddEntradaForm();
-            }
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(
+                height: 8,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  'Vaga ${widget.vaga.id}',
+                  style: textTheme.titleLarge
+                      ?.copyWith(color: colorScheme.onBackground),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              BlocConsumer<AddEntradaBloc, AddEntradaState>(
+                bloc: bloc,
+                builder: (context, state) {
+                  if (state is AddEntradaInitialState) {
+                    return const AddEntradaForm();
+                  }
 
-            return Container();
-          },
-          listener: (BuildContext context, AddEntradaState state) {
-            if (state is AddEntradaSuccessState) {
-              // puxar as vagas novamente e mandar de volta pra home
-              final GetVagasBloc bloc = getIt();
-              bloc.add(BuscarVagas());
-              context.pop();
-            }
-          },
+                  return Container();
+                },
+                listener: (BuildContext context, AddEntradaState state) {
+                  if (state is AddEntradaSuccessState) {
+                    // puxar as vagas novamente e mandar de volta pra home
+                    final GetVagasBloc bloc = getIt();
+                    bloc.add(BuscarVagas());
+                    context.pop();
+                  }
+                },
+              ),
+            ],
+          ),
         ));
   }
 }

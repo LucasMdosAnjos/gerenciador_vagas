@@ -74,16 +74,19 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Listagem de Vagas',
-                    style: textTheme.titleLarge
-                        ?.copyWith(color: colorScheme.onBackground),
-                    textAlign: TextAlign.center,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8.0),
+                    child: Text(
+                      'Listagem de Vagas',
+                      style: textTheme.titleLarge
+                          ?.copyWith(color: colorScheme.onBackground),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
                   TextButton.icon(
                       onPressed: () {},
                       icon: const Icon(Icons.list),
-                      label: const Text('Movimentações'))
+                      label: const Text('Histórico'))
                 ],
               ),
             ),
