@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_masked_text2/flutter_masked_text2.dart';
 import 'package:gerenciador_vagas/features/add_entrada/presentation/blocs/add_entrada_bloc.dart';
+import 'package:gerenciador_vagas/features/add_entrada/presentation/blocs/add_entrada_event.dart';
 import 'package:gerenciador_vagas/features/add_entrada/presentation/blocs/add_entrada_state.dart';
 import 'package:gerenciador_vagas/features/add_entrada/presentation/widgets/add_entrada_form.dart';
 import 'package:gerenciador_vagas/features/home/domain/entities/vaga.dart';
@@ -36,6 +37,8 @@ class _AddEntradaScreenState extends State<AddEntradaScreen> {
     super.initState();
     // Inicializa com a máscara Mercosul
     controllerAtual = controllerMercosul;
+    // Resetar Estado para estado inicial do bloc de Adicionar Entrada
+    bloc.add(ResetEntrada());
   }
 
   void alterarPlaca(TipoPlacaForm novaSelecao) {
@@ -60,11 +63,6 @@ class _AddEntradaScreenState extends State<AddEntradaScreen> {
             'Adicionar Entrada',
             style: textTheme.headlineSmall,
           ),
-          leading: IconButton(
-              onPressed: () {
-                context.pop();
-              },
-              icon: const Icon(Icons.arrow_back)),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0),

@@ -8,3 +8,9 @@ class GetVagasException implements Exception {
   @override
   String toString() => message;
 }
+
+class AddSaidaException implements Exception {
+  final String message;
+
+  AddSaidaException({required this.message});
+}

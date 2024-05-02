@@ -104,4 +104,11 @@ void main() {
 
     bloc.add(AddEntrada(params));
   });
+
+  test('Deve resetar para o estado inicial ao mandar evento de Reset',
+      () async {
+    expect(bloc.stream, emits(isA<AddEntradaInitialState>()));
+
+    bloc.add(ResetEntrada());
+  });
 }

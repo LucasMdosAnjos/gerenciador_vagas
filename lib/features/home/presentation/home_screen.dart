@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:gerenciador_vagas/cubits/theme_cubit.dart';
+import 'package:gerenciador_vagas/features/home/presentation/blocs/add_saida/add_saida_bloc.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_bloc.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_event.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_state.dart';
 import 'package:gerenciador_vagas/features/home/presentation/widgets/item_vaga_widget.dart';
-import 'package:gerenciador_vagas/main.dart';
+import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
+final GetIt getIt = GetIt.instance;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -17,14 +19,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final GetVagasBloc bloc = getIt();
+  final GetVagasBloc getVagasBloc = getIt();
   final ThemeCubit themeCubit = getIt();
+  final AddSaidaBloc addSaidaBloc = getIt();
 
   @override
   void initState() {
     super.initState();
 
-    bloc.add(BuscarVagas());
+    getVagasBloc.add(BuscarVagas());
   }
 
   TextTheme get textTheme => Theme.of(context).textTheme;
@@ -98,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             Expanded(
               child: BlocBuilder<GetVagasBloc, GetVagasState>(
-                bloc: bloc,
+                bloc: getVagasBloc,
                 builder: (context, state) {
                   if (state is GetVagasLoadingState) {
                     return Container(

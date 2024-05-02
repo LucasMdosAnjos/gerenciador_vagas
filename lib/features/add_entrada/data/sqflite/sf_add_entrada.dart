@@ -25,7 +25,7 @@ class SfAddEntrada implements AddEntradaDatasource {
       await db.insert('movimentacoes', {
         'placa_veiculo': params.placaVeiculo,
         'tipo': 1, //1 para entrada
-        'timestamp': DateTime.now().toIso8601String(),
+        'timestamp': params.timestamp,
         'vaga_id': params.vagaId
       });
 

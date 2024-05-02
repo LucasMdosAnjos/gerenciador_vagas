@@ -8,3 +8,7 @@ class AddEntrada implements AddEntradaEvent {
 
   AddEntrada(this.params);
 }
+
+class ResetEntrada implements AddEntradaEvent{
+  
+}

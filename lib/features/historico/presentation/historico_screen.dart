@@ -70,26 +70,34 @@ class _HistoricoScreenState extends State<HistoricoScreen> {
                           final movimentacoes = state.movimentacoes;
                           return Container(
                             key: const Key("getMovimentacoesSuccessWidget"),
-                            child: ListView(
-                                children: AnimateList(
-                              interval: const Duration(milliseconds: 100),
-                              effects: const [
-                                FadeEffect(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.easeIn,
-                                    begin: 0,
-                                    end: 1),
-                                MoveEffect(
-                                    duration: Duration(milliseconds: 300),
-                                    curve: Curves.easeIn,
-                                    begin: Offset(250, 0),
-                                    end: Offset(0, 0))
-                              ],
-                              children: movimentacoes
-                                  .map((movimentacao) => ItemMovimentacaoWidget(
-                                      movimentacao: movimentacao))
-                                  .toList(),
-                            )),
+                            child: movimentacoes.isEmpty
+                                ? Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Text(
+                                      'Ainda não existem movimentações',
+                                      style: textTheme.bodyLarge,
+                                    ))
+                                : ListView(
+                                    children: AnimateList(
+                                    interval: const Duration(milliseconds: 100),
+                                    effects: const [
+                                      FadeEffect(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.easeIn,
+                                          begin: 0,
+                                          end: 1),
+                                      MoveEffect(
+                                          duration: Duration(milliseconds: 300),
+                                          curve: Curves.easeIn,
+                                          begin: Offset(250, 0),
+                                          end: Offset(0, 0))
+                                    ],
+                                    children: movimentacoes
+                                        .map((movimentacao) =>
+                                            ItemMovimentacaoWidget(
+                                                movimentacao: movimentacao))
+                                        .toList(),
+                                  )),
                           );
                         }
                         return Container();

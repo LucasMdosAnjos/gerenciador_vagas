@@ -1,7 +1,11 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:gerenciador_vagas/cubits/theme_cubit.dart';
 import 'package:gerenciador_vagas/features/home/domain/entities/vaga.dart';
+import 'package:gerenciador_vagas/features/home/presentation/blocs/add_saida/add_saida_bloc.dart';
+import 'package:gerenciador_vagas/features/home/presentation/blocs/add_saida/add_saida_event.dart';
+import 'package:gerenciador_vagas/features/home/presentation/blocs/add_saida/add_saida_state.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_bloc.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_event.dart';
 import 'package:gerenciador_vagas/features/home/presentation/blocs/get_vagas/get_vagas_state.dart';
@@ -13,13 +17,20 @@ final GetIt getIt = GetIt.instance;
 class MockGetVagasBloc extends MockBloc<GetVagasEvent, GetVagasState>
     implements GetVagasBloc {}
 
+class MockAddSaidaBloc extends MockBloc<AddSaidaEvent, AddSaidaState>
+    implements AddSaidaBloc {}
+
 void main() {
   late MockGetVagasBloc bloc;
+  late MockAddSaidaBloc addSaidaBloc;
 
   setUpAll(() async {
     bloc = MockGetVagasBloc();
+    addSaidaBloc = MockAddSaidaBloc();
 
     getIt.registerSingleton<GetVagasBloc>(bloc);
+    getIt.registerSingleton<ThemeCubit>(ThemeCubit());
+    getIt.registerSingleton<AddSaidaBloc>(addSaidaBloc);
   });
 
   group('Home Screen | ', () {

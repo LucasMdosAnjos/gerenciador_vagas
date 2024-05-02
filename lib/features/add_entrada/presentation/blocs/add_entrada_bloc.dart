@@ -21,5 +21,9 @@ class AddEntradaBloc extends Bloc<AddEntradaEvent, AddEntradaState> {
         });
       },
     );
+
+    on<ResetEntrada>(
+      (event, emit) => emit(AddEntradaInitialState()),
+    );
   }
 }

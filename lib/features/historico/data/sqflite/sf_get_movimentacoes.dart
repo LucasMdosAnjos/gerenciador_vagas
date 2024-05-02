@@ -11,11 +11,15 @@ class SfGetMovimentacoes implements GetMovimentacoesDatasource {
   @override
   Future<List<Movimentacao>> getMovimentacoes() async {
     try {
-  final result = await db.query('movimentacoes');
-      final movimentacoesResponse = result.map(SfMovimentacaoResponse.fromMap).toList();
+
+      // Trazer resultados dos mais recentes pros mais antigos através de orderBy
+      final result = await db.query('movimentacoes', orderBy: 'timestamp DESC');
+      final movimentacoesResponse =
+          result.map(SfMovimentacaoResponse.fromMap).toList();
       return movimentacoesResponse.map((e) => e.movimentacao).toList();
     } catch (e) {
-      throw GetMovimentacoesException(message: "Erro ao puxar as movimentações");
+      throw GetMovimentacoesException(
+          message: "Erro ao puxar as movimentações");
     }
   }
 }
