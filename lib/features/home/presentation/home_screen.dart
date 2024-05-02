@@ -47,13 +47,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       onPressed: () {
                         themeCubit.setTheme(ThemeMode.light);
                       },
-                      icon: const Icon(Icons.light_mode));
+                      icon: const Icon(Icons.light_mode),
+                      color: colorScheme.secondary);
                 } else {
                   return IconButton(
-                      onPressed: () {
-                        themeCubit.setTheme(ThemeMode.dark);
-                      },
-                      icon: const Icon(Icons.dark_mode));
+                    onPressed: () {
+                      themeCubit.setTheme(ThemeMode.dark);
+                    },
+                    icon: const Icon(Icons.dark_mode),
+                    color: colorScheme.secondary,
+                  );
                 }
               })
         ],
