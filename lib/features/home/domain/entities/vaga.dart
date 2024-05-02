@@ -9,11 +9,14 @@ class Vaga {
     required this.statusVaga,
     this.placaVeiculo
   });
+
+  @override
+  String toString() => 'Vaga(id: $id, statusVaga: $statusVaga, placaVeiculo: $placaVeiculo)';
 }
 
 enum StatusVaga {
   livre(0),
-  preeenchida(1);
+  preenchida(1);
 
   final int value;
 

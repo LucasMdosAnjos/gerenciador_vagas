@@ -22,7 +22,7 @@ void main() {
       final listVagas = [
         Vaga(id: 1, statusVaga: StatusVaga.livre),
         Vaga(id: 2, statusVaga: StatusVaga.livre),
-        Vaga(id: 3, statusVaga: StatusVaga.preeenchida)
+        Vaga(id: 3, statusVaga: StatusVaga.preenchida)
       ];
       when(
             () => datasource.getVagas(),

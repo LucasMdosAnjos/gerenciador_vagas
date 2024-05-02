@@ -12,26 +12,22 @@ class SfAddEntrada implements AddEntradaDatasource {
   Future<int> addEntrada(ParamsAddEntrada params) async {
     try {
       // Atualizar a entidade vagas com o status preenchido/ocupado e com a placa do veículo em questão
-      final result = await db.update(
+      await db.update(
           'vagas',
           {
-            'status': StatusVaga.preeenchida.value,
+            'status': StatusVaga.preenchida.value,
             'placa_veiculo': params.placaVeiculo
           },
           where: 'id = ?',
           whereArgs: [params.vagaId]);
 
-      print(result);
-
       // Inserir na entidade movimentacoes o historico dessa entrada
-      final result2 = await db.insert('movimentacoes', {
+      await db.insert('movimentacoes', {
         'placa_veiculo': params.placaVeiculo,
         'tipo': 1, //1 para entrada
         'timestamp': DateTime.now().toIso8601String(),
         'vaga_id': params.vagaId
       });
-
-      print(result2);
 
       return 200;
     } catch (e) {
