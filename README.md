@@ -14,7 +14,7 @@ O "Gerenciador de Vagas" é um aplicativo Flutter desenvolvido para gerenciar va
 - **Suporte a temas:** Disponibilidade de temas claro e escuro.
 - **Compatibilidade:** Suporte para as plataformas iOS e Android.
 - **Temas Dark e Light:** Suporte a alteração de temas entre Dark e Light na Tela Inicial com o padrão sendo o Light.
-- **Vídeo de funcionamento do App:** https://youtu.be/O2xQfk3KUg0
+- **Vídeo de funcionamento do App:** [https://youtu.be/O2xQfk3KUg0](https://www.youtube.com/watch?v=0qwsT3hVYxY)
 
 ## Versão do Flutter
 
